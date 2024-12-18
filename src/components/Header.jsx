@@ -34,7 +34,7 @@ function Header() {
   const id = user?.id;
   const isAdmin = AdminsID.includes(id);
   return (
-    <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16">
+    <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16 bg-primary">
       {/* desktop and tablet size */}
       <div className="hidden h-full w-full items-center justify-between md:flex">
         <Link to={"/"} className="flex items-center gap-2">
@@ -113,7 +113,7 @@ function Header() {
           <img src={Logo} className="w-8 object-cover" alt="Logo" />
           <p className="text-xl font-bold text-headingColor">City</p>
         </Link>
-        
+
         <div className="relative">
             <motion.img
               whileTap={{ scale: 0.6 }}
