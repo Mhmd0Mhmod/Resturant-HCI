@@ -34,7 +34,7 @@ function Header() {
   const isAdmin = import.meta.env.VITE_SUPABASE_ADMINS.includes(id);
 
   return (
-    <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16">
+    <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16 bg-primary">
       {/* desktop and tablet size */}
       <div className="hidden h-full w-full items-center justify-between md:flex">
         <Link to={"/"} className="flex items-center gap-2">
