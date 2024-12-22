@@ -34,7 +34,7 @@ function Header() {
   const isAdmin = import.meta.env.VITE_SUPABASE_ADMINS.includes(id);
 
   return (
-    <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16 bg-primary">
+    <header className="fixed z-50 w-screen bg-primary p-3 px-4 md:p-6 md:px-16">
       {/* desktop and tablet size */}
       <div className="hidden h-full w-full items-center justify-between md:flex">
         <Link to={"/"} className="flex items-center gap-2">
@@ -86,7 +86,10 @@ function Header() {
               >
                 {isAdmin && (
                   <Link to={"/createItem"}>
-                    <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100">
+                    <p
+                      className="flex cursor-pointer items-center gap-3 px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100"
+                      onClick={() => setIsMenu(false)}
+                    >
                       New Item <MdAdd />
                     </p>
                   </Link>
