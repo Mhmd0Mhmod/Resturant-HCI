@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Provider store={store}>
         <AnimatePresence mode="wait">
-          <div className="flex h-auto  flex-col bg-primary">
+          <div className=" flex h-auto  flex-col bg-primary">
             <Header />
             <main className="mt-14 md:mt-20 w-full px-4 md:px-16 py-4">
               <Routes>
