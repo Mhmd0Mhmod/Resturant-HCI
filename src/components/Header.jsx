@@ -32,6 +32,8 @@ function Header() {
   const avatar_url = user?.user_metadata?.avatar_url || Avatar;
   const id = user?.id;
   const isAdmin = import.meta.env.VITE_SUPABASE_ADMINS.includes(id);
+  console.log(isAdmin);
+
   return (
     <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16">
       {/* desktop and tablet size */}
