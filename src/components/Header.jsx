@@ -87,11 +87,13 @@ function Header() {
                 Service
               </li>
             </Link>
-            <Link to={"/orders"}>
-              <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
-                Orders
-              </li>
-            </Link>
+            {user && (
+              <Link to={"/orders"}>
+                <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
+                  Orders
+                </li>
+              </Link>
+            )}
           </motion.ul>
 
           <div
