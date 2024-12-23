@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { MdAdd, MdLogout, MdShoppingBasket } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -8,7 +9,6 @@ import { signInWithGoogle } from "../DB/services";
 import { supabase } from "../DB/Supabase";
 import Avatar from "./../imgs/avatar.png";
 import Logo from "./../imgs/logo.png";
-import toast from "react-hot-toast";
 function Header() {
   const dispatch = useDispatch();
   const { totalItems } = useSelector((state) => state.cart);
@@ -85,6 +85,11 @@ function Header() {
             <Link to={"/services"}>
               <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
                 Service
+              </li>
+            </Link>
+            <Link to={"/orders"}>
+              <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
+                Orders
               </li>
             </Link>
           </motion.ul>
@@ -184,6 +189,7 @@ function Header() {
                     Home
                   </li>
                 </Link>
+
                 <Link to={"/menu"}>
                   <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
                     Menu
@@ -199,10 +205,15 @@ function Header() {
                     Service
                   </li>
                 </Link>
+                <Link to={"/orders"}>
+                  <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
+                    Orders
+                  </li>
+                </Link>
               </ul>
               <p
                 className="m-2 flex cursor-pointer items-center justify-center gap-3 rounded-md bg-gray-200 p-2 text-base text-textColor shadow-md transition-all duration-100 ease-in-out hover:bg-gray-300"
-                // onClick={logout}
+                onClick={logout}
               >
                 Logout <MdLogout />
               </p>

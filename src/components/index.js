@@ -17,3 +17,5 @@ export { default as MenuPage } from "./MenuPage";
 export { default as AboutUsPage } from "./AboutUsPage";
 
 export { default as ServicesPage } from "./ServicesPage";
+
+export { default as OrdersPage } from "./OrdersPage";
