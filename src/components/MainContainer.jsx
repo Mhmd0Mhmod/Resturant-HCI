@@ -33,7 +33,7 @@ function MainContainer() {
       price: 2.0,
     },
     {
-      id: 3,
+      id: 4,
       name: "Strawberry",
       image:
         "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
@@ -41,7 +41,7 @@ function MainContainer() {
       price: 2.0,
     },
     {
-      id: 3,
+      id: 5,
       name: "Strawberry",
       image:
         "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
@@ -49,7 +49,7 @@ function MainContainer() {
       price: 2.0,
     },
     {
-      id: 3,
+      id: 6,
       name: "Strawberry",
       image:
         "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
@@ -57,15 +57,13 @@ function MainContainer() {
       price: 2.0,
     },
     {
-      id: 3,
+      id: 7,
       name: "Strawberry",
       image:
         "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
       calories: 33,
       price: 2.0,
     },
-    
-    // أضف المزيد من الفواكه حسب الحاجة
   ];
 
 function MainContainer() {
