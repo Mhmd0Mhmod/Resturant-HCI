@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { MdAdd, MdLogout, MdShoppingBasket } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -8,7 +9,6 @@ import { signInWithGoogle } from "../DB/services";
 import { supabase } from "../DB/Supabase";
 import Avatar from "./../imgs/avatar.png";
 import Logo from "./../imgs/logo.png";
-import toast from "react-hot-toast";
 function Header() {
   const dispatch = useDispatch();
   const { totalItems } = useSelector((state) => state.cart);
@@ -54,7 +54,7 @@ function Header() {
     <header className="fixed z-50 w-screen bg-primary p-3 px-4 md:p-6 md:px-16">
       {/* desktop and tablet size */}
       <div className="hidden h-full w-full items-center justify-between md:flex">
-        <Link to={"/"} className="flex items-center gap-2">
+        <Link to={"/home"} className="flex items-center gap-2">
           <img src={Logo} className="w-8 object-cover" alt="Logo" />
           <p className="text-xl font-bold text-headingColor">City</p>
         </Link>
@@ -66,7 +66,7 @@ function Header() {
             exit={{ opacity: 0, x: 200 }}
             className="flex items-center gap-8"
           >
-            <Link to={"/"}>
+            <Link to={"/home"}>
               <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
                 Home
               </li>
@@ -87,6 +87,13 @@ function Header() {
                 Service
               </li>
             </Link>
+            {user && (
+              <Link to={"/orders"}>
+                <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
+                  Orders
+                </li>
+              </Link>
+            )}
           </motion.ul>
 
           <div
@@ -151,7 +158,7 @@ function Header() {
           )}
         </div>
 
-        <Link to={"/"} className="flex items-center gap-2">
+        <Link to={"/home"} className="flex items-center gap-2">
           <img src={Logo} className="w-8 object-cover" alt="Logo" />
           <p className="text-xl font-bold text-headingColor">City</p>
         </Link>
@@ -179,11 +186,12 @@ function Header() {
                 </Link>
               )}
               <ul className="flex flex-col">
-                <Link to={"/"}>
+                <Link to={"/home"}>
                   <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
                     Home
                   </li>
                 </Link>
+
                 <Link to={"/menu"}>
                   <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
                     Menu
@@ -199,10 +207,15 @@ function Header() {
                     Service
                   </li>
                 </Link>
+                <Link to={"/orders"}>
+                  <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
+                    Orders
+                  </li>
+                </Link>
               </ul>
               <p
                 className="m-2 flex cursor-pointer items-center justify-center gap-3 rounded-md bg-gray-200 p-2 text-base text-textColor shadow-md transition-all duration-100 ease-in-out hover:bg-gray-300"
-                // onClick={logout}
+                onClick={logout}
               >
                 Logout <MdLogout />
               </p>

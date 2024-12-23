@@ -1,20 +1,22 @@
 import { AnimatePresence } from "motion/react";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import AppLayout from "./AppLayout";
 import {
   AboutUsPage,
   CreateContainer,
-  Header,
   MainContainer,
   MenuPage,
+  OrdersPage,
   ProtecteRoutes,
   ServicesPage,
+  OrderDetails,
   Login,
   SignUp,
 } from "./components";
 import { store } from "./context/store";
-import AppLayout from "./AppLayout";
+import UserProfile from "./components/ProfileSettings";
 
 function App() {
   return (
@@ -23,10 +25,16 @@ function App() {
         <AnimatePresence mode="wait">
           <Routes>
             <Route element={<AppLayout />}>
-              <Route index path="/" element={<MainContainer />} />
+              <Route index element={<Navigate to={"home"} replace />} />
+              <Route path="home" element={<MainContainer />} />
               <Route path="menu" element={<MenuPage />} />
               <Route path="aboutus" element={<AboutUsPage />} />
               <Route path="services" element={<ServicesPage />} />
+              <Route element={<ProtecteRoutes />}>
+                <Route path="orders" element={<OrdersPage />} />
+                <Route path="createItem" element={<CreateContainer />} />
+                <Route path="orders/:id" element={<OrderDetails />} />
+              </Route>
               <Route
                 path="createItem"
                 element={
