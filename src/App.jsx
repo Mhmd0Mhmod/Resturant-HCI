@@ -13,6 +13,8 @@ import {
   ServicesPage,
   OrderDetails,
   UserProfile,
+  Login,
+  SignUp,
 } from "./components";
 import { store } from "./context/store";
 
@@ -34,6 +36,16 @@ function App() {
                 <Route path="orders/:id" element={<OrderDetails />} />
                 <Route path="profile" element={<UserProfile />} />
               </Route>
+              <Route
+                path="createItem"
+                element={
+                  <ProtecteRoutes>
+                    <CreateContainer />
+                  </ProtecteRoutes>
+                }
+              />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<SignUp />} />
             </Route>
           </Routes>
         </AnimatePresence>
@@ -42,4 +54,5 @@ function App() {
     </BrowserRouter>
   );
 }
+
 export default App;
