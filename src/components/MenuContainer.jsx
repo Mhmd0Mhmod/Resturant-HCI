@@ -2,14 +2,18 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IoFastFood } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFoodItems } from "../DB/services";
 import { categories } from "../utils/data";
 import RowContainer from "./RowContainer";
+import { fetchFoodItems } from "../DB/services";
 
 const MenuContainer = () => {
   const [filter, setFilter] = useState("chicken");
-
+  const dispath = useDispatch();
   const { food: dataToDisplay } = useSelector((state) => state.food);
+  useEffect(() => {
+    if (dataToDisplay.length) return;
+    dispath(fetchFoodItems());
+  }, [dataToDisplay, dispath]);
 
   return (
     <section className="my-6 w-full" id="menu">

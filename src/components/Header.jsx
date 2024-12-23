@@ -66,18 +66,27 @@ function Header() {
             exit={{ opacity: 0, x: 200 }}
             className="flex items-center gap-8"
           >
-            <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
-              Home
-            </li>
-            <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
-              Menu
-            </li>
-            <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
-              About Us
-            </li>
-            <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
-              Service
-            </li>
+            <Link to={"/"}>
+              <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
+                Home
+              </li>
+            </Link>
+
+            <Link to={"/menu"}>
+              <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
+                Menu
+              </li>
+            </Link>
+            <Link to={"/aboutus"}>
+              <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
+                About Us
+              </li>
+            </Link>
+            <Link to={"/services"}>
+              <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
+                Service
+              </li>
+            </Link>
           </motion.ul>
 
           <div

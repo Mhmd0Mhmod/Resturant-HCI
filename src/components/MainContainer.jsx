@@ -3,7 +3,6 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { motion } from "framer-motion";
 import RowContainer from "./RowContainer";
 import { useEffect, useState } from "react";
-import CartContainer from "./CartContainer";
 import MenuContainer from "./MenuContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoodItems } from "../DB/services";
@@ -11,10 +10,11 @@ function MainContainer() {
   const [scrollValue, setScrollValue] = useState(0);
   const { food } = useSelector((state) => state.food);
   const dispatch = useDispatch();
-  const { showCart } = useSelector((state) => state.state);
+
   useEffect(() => {
+    if (food.length) return;
     dispatch(fetchFoodItems());
-  }, [dispatch]);
+  }, [dispatch, food]);
   return (
     <div className="flex h-auto w-full flex-col items-center justify-center">
       <HomContainer />
@@ -52,7 +52,6 @@ function MainContainer() {
       </section>
 
       <MenuContainer />
-      {showCart && <CartContainer />}
     </div>
   );
 }

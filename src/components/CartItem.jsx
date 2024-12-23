@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { decrementQuantity, incrementQuantity } from "../context/CartSlice";
 function CartItem({ item }) {
-  console.log(item);
   const { title, price, quantity, imageURL } = item;
   const dispatch = useDispatch();
   const increment = () => {

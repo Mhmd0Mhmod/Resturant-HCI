@@ -9,3 +9,11 @@ export { default as HomContainer } from "./HomeContainer";
 export { default as Loader } from "./Loader";
 
 export { default as CartContainer } from "./CartContainer";
+
+export { default as ProtecteRoutes } from "./ProtecteRoutes";
+
+export { default as MenuPage } from "./MenuPage";
+
+export { default as AboutUsPage } from "./AboutUsPage";
+
+export { default as ServicesPage } from "./ServicesPage";
