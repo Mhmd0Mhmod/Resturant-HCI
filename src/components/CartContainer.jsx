@@ -5,15 +5,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { setShowCart } from "../context/slice";
 import CartItem from "./CartItem";
 import { clearCart } from "../context/CartSlice";
+import { checkoutOrder } from "../DB/services";
+import toast from "react-hot-toast";
 
 const CartContainer = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.state) || {};
   const { cart, total } = useSelector((state) => state.cart);
   const hanldeHideCart = () => {
     dispatch(setShowCart(false));
   };
   const hanldeClearCart = () => {
     dispatch(clearCart());
+  };
+
+  const hanldeCheckout = () => {
+    if (!user) {
+      toast.error("Please login to checkout");
+      return;
+    }
+    dispatch(checkoutOrder({ cart, userId: user.id, totalPrice: total }));
   };
 
   return (
@@ -56,7 +67,8 @@ const CartContainer = () => {
             <motion.button
               whileTap={{ scale: 0.8 }}
               type="button"
-              className="my-2 w-full rounded-full bg-orange-500 p-2 text-lg text-gray-50 hover:shadow-lg"
+              onClick={hanldeCheckout}
+              className={`my-2 w-full rounded-full p-2 text-lg text-gray-50 hover:shadow-lg ${!cart.length || !user ? "cursor-not-allowed bg-gray-200" : "bg-orange-500"} `}
             >
               checkout
             </motion.button>
