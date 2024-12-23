@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { MdShoppingBasket } from "react-icons/md";
 import { motion } from "framer-motion";
 
@@ -15,7 +15,9 @@ const RowContainer = ({ flag, data, scrollValue }) => {
     <div
       ref={rowContainer}
       className={`my-12 flex w-full items-center gap-3 scroll-smooth ${
-        flag ? "scrollbar-none overflow-x-scroll" : "flex-wrap overflow-x-hidden"
+        flag
+          ? "scrollbar-none overflow-x-scroll"
+          : "flex-wrap overflow-x-hidden"
       }`}
     >
       {data &&
@@ -27,7 +29,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
             <div className="flex w-full items-center justify-between">
               <motion.img
                 whileHover={{ scale: 1.05 }}
-                src={item.image}
+                src={item.image || item.imageURL}
                 alt={item.name}
                 className="-mt-6 w-32 drop-shadow-2xl"
               />
@@ -40,7 +42,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
             </div>
             <div className="mt-2 flex w-full flex-col items-end justify-end">
               <p className="text-sm font-semibold text-textColor md:text-base">
-                {item.name}
+                {item.name || item.title}
               </p>
               <p className="mt-1 text-xs text-gray-500">
                 {item.calories} Calories

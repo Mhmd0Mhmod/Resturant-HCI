@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
+  showCart: false,
 };
 const reducer = createSlice({
   name: "reducer",
@@ -13,7 +14,10 @@ const reducer = createSlice({
     removeUser: (state) => {
       state.user = null;
     },
+    setShowCart: (state, action) => {
+      state.showCart = action.payload;
+    },
   },
 });
-export const { setUser, removeUser } = reducer.actions;
+export const { setUser, removeUser, setShowCart } = reducer.actions;
 export default reducer.reducer;

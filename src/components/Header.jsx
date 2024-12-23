@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { MdAdd, MdLogout, MdShoppingBasket } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { removeUser, setUser } from "../context/slice";
+import { removeUser, setShowCart, setUser } from "../context/slice";
 import { signInWithGoogle } from "../DB/services";
 import { supabase } from "../DB/Supabase";
 import Avatar from "./../imgs/avatar.png";
@@ -11,7 +11,7 @@ import Logo from "./../imgs/logo.png";
 import toast from "react-hot-toast";
 function Header() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.state.user);
+  const { user } = useSelector((state) => state.state);
   const [isMenu, setIsMenu] = useState(false);
   useEffect(() => {
     const getUser = async () => {
@@ -39,6 +39,9 @@ function Header() {
     } catch (error) {
       toast.error("Error logging out" + error.message);
     }
+  };
+  const handleShowCart = () => {
+    dispatch(setShowCart(true));
   };
   const avatar_url = user?.user_metadata?.avatar_url || Avatar;
 
@@ -75,7 +78,10 @@ function Header() {
             </li>
           </motion.ul>
 
-          <div className="relative flex items-center justify-center">
+          <div
+            className="relative flex items-center justify-center"
+            onClick={handleShowCart}
+          >
             <MdShoppingBasket className="cursor-pointer text-2xl text-textColor" />
             <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-cartNumBg">
               <p className="text-xs font-semibold text-white">2</p>

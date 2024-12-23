@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   uploadImage as uploadImageAPI,
   deleteImage as deleteImageAPI,

@@ -54,6 +54,7 @@ export const deleteImage = async (imageURL) => {
 export const addFoodItem = createAsyncThunk(
   "food/AddFoodItem",
   async ({ data, onSuccess, onError }) => {
+    data.imageURL = `${import.meta.env.VITE_SUPABASE_STORAGE}/${data.imageURL}`;
     const { error } = await supabase.from("Food").insert(data);
     if (error) {
       onError(error);
@@ -63,9 +64,10 @@ export const addFoodItem = createAsyncThunk(
   },
 );
 export const getCateogry = async (category) => {
-  const { data, error } = await (
-    await supabase.from("food").select("*")
-  ).eq("category", category);
+  const { data, error } = await supabase
+    .from("Food")
+    .select("*")
+    .eq("category", category);
   if (error) {
     throw error;
   } else {
@@ -77,6 +79,7 @@ export const fetchFoodItems = createAsyncThunk(
   "food/fetchFoodItems",
   async () => {
     const { data, error } = await supabase.from("Food").select("*");
+
     if (error) {
       throw error;
     } else {
