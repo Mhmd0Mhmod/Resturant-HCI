@@ -84,7 +84,7 @@ function MainContainer() {
             <motion.button
               whileTap={{ scale: 0.75 }}
               className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-orange-300 hover:bg-orange-500 hover:shadow-lg"
-              onClick={() => setScrollValue((prev) => prev - 200)} 
+              onClick={() => setScrollValue((prev) => prev - 200)}
             >
               <MdChevronLeft className="text-lg text-white" />
             </motion.button>
@@ -92,7 +92,7 @@ function MainContainer() {
             <motion.button
               whileTap={{ scale: 0.75 }}
               className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-orange-300 transition-all duration-100 ease-in-out hover:bg-orange-500 hover:shadow-lg"
-              onClick={() => setScrollValue((prev) => prev + 200)} 
+              onClick={() => setScrollValue((prev) => prev + 200)}
             >
               <MdChevronRight className="text-lg text-white" />
             </motion.button>
@@ -101,13 +101,9 @@ function MainContainer() {
 
         <RowContainer scrollValue={scrollValue} flag={true} data={fruitsData} />
       </section>
-<<<<<<< Updated upstream
-      <CartContainer/>
 
-=======
       <MenuContainer />
       {showCart && <CartContainer />}
->>>>>>> Stashed changes
     </div>
   );
 }
