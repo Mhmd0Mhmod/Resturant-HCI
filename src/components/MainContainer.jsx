@@ -3,10 +3,12 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { motion } from "framer-motion";
 import RowContainer from "./RowContainer";
 import { useEffect, useRef, useState } from "react";
+import CartContainer from "./CartContainer";
 
 function MainContainer() {
   const [scrollValue, setScrollValue] = useState(0);
 
+  // بيانات الفواكه
   const fruitsData = [
     {
       id: 1,
@@ -65,7 +67,6 @@ function MainContainer() {
       price: 2.0,
     },
     
-    // أضف المزيد من الفواكه حسب الحاجة
   ];
 
   return (
@@ -82,7 +83,7 @@ function MainContainer() {
             <motion.button
               whileTap={{ scale: 0.75 }}
               className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-orange-300 hover:bg-orange-500 hover:shadow-lg"
-              onClick={() => setScrollValue((prev) => prev - 200)} // لتصغير القيم على التمرير لليسار
+              onClick={() => setScrollValue((prev) => prev - 200)} 
             >
               <MdChevronLeft className="text-lg text-white" />
             </motion.button>
@@ -90,7 +91,7 @@ function MainContainer() {
             <motion.button
               whileTap={{ scale: 0.75 }}
               className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-orange-300 transition-all duration-100 ease-in-out hover:bg-orange-500 hover:shadow-lg"
-              onClick={() => setScrollValue((prev) => prev + 200)} // لزيادة القيم على التمرير لليمين
+              onClick={() => setScrollValue((prev) => prev + 200)} 
             >
               <MdChevronRight className="text-lg text-white" />
             </motion.button>
@@ -99,6 +100,8 @@ function MainContainer() {
 
         <RowContainer scrollValue={scrollValue} flag={true} data={fruitsData} />
       </section>
+      <CartContainer/>
+
     </div>
   );
 }
