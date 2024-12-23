@@ -3,7 +3,6 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { motion } from "framer-motion";
 import RowContainer from "./RowContainer";
 import { useEffect, useRef, useState } from "react";
-import CartContainer from "./CartContainer";
 
 function MainContainer() {
   const [scrollValue, setScrollValue] = useState(0);
