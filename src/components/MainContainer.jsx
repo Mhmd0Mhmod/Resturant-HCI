@@ -1,8 +1,10 @@
-import HomContainer from "./HomeContainer";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import HomContainer from "./HomeContainer";
+import MenuContainer from "./MenuContainer";
 import RowContainer from "./RowContainer";
-import { useEffect, useRef, useState } from "react";
+
 
 function MainContainer() {
   const [scrollValue, setScrollValue] = useState(0);
@@ -99,6 +101,8 @@ function MainContainer() {
 
         <RowContainer scrollValue={scrollValue} flag={true} data={fruitsData} />
       </section>
+
+      <MenuContainer />
     </div>
   );
 }
