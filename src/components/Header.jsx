@@ -179,18 +179,26 @@ function Header() {
                 </Link>
               )}
               <ul className="flex flex-col">
-                <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
-                  Home
-                </li>
-                <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
-                  Menu
-                </li>
-                <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
-                  About Us
-                </li>
-                <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
-                  Service
-                </li>
+                <Link to={"/"}>
+                  <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
+                    Home
+                  </li>
+                </Link>
+                <Link to={"/menu"}>
+                  <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
+                    Menu
+                  </li>
+                </Link>
+                <Link to={"/aboutus"}>
+                  <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
+                    About Us
+                  </li>
+                </Link>
+                <Link to={"/services"}>
+                  <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
+                    Service
+                  </li>
+                </Link>
               </ul>
               <p
                 className="m-2 flex cursor-pointer items-center justify-center gap-3 rounded-md bg-gray-200 p-2 text-base text-textColor shadow-md transition-all duration-100 ease-in-out hover:bg-gray-300"

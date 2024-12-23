@@ -24,7 +24,7 @@ const CartContainer = () => {
       toast.error("Please login to checkout");
       return;
     }
-    dispatch(checkoutOrder({ cart, userId: user.id }));
+    dispatch(checkoutOrder({ cart, userId: user.id, totalPrice: total }));
   };
 
   return (
