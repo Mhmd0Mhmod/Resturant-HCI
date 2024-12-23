@@ -90,8 +90,10 @@ export const fetchFoodItems = createAsyncThunk(
 
 export const checkoutOrder = createAsyncThunk(
   "cart/checkoutOrder",
-  async (cart) => {
-    const { data, error } = await supabase.from("Orders").insert({ ...cart });
+  async ({ cart, userId }) => {
+    const { data, error } = await supabase
+      .from("Orders")
+      .insert({ order: cart, userId });
     if (error) {
       throw error;
     } else {

@@ -64,16 +64,15 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    const toastId = toast.loading("Placing order...");
     builder.addCase(checkoutOrder.fulfilled, (state) => {
-      toast.success("Order placed successfully", { id: toastId });
+      toast.success("Order placed successfully");
       state.cart = [];
       state.total = 0;
       state.totalItems = 0;
       localStorage.removeItem("cart");
     });
     builder.addCase(checkoutOrder.rejected, (state, action) => {
-      toast.error(action.error.message, { id: toastId });
+      toast.error(action.error.message);
     });
   },
 });
