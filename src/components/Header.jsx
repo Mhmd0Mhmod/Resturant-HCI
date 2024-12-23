@@ -30,6 +30,7 @@ function Header() {
     }
   };
   const avatar_url = user?.user_metadata?.avatar_url || Avatar;
+
   const id = user?.id;
   const isAdmin = import.meta.env.VITE_SUPABASE_ADMINS.includes(id);
 

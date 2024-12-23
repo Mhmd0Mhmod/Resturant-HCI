@@ -1,8 +1,9 @@
-// Import necessary libraries and components
-import React, { useState } from "react"; // React and useState for managing state in functional components
-import { motion } from "framer-motion"; // For animations and transitions
-
-// Importing icons from "react-icons/md"
+import { useState } from "react";
+import {
+  uploadImage as uploadImageAPI,
+  deleteImage as deleteImageAPI,
+  addFoodItem,
+} from "../DB/services";
 import {
   MdFastfood,
   MdCloudUpload,
@@ -11,81 +12,82 @@ import {
   MdAttachMoney,
 } from "react-icons/md";
 
-// Importing helper data and components
-import { categories } from "../utils/data"; // Categories for dropdown
-import Loader from "./Loader"; // A loader component for showing loading state
+import Loader from "./Loader";
+import { useForm } from "react-hook-form";
 
-// Main component
+import { categories } from "../utils/data";
+import toast from "react-hot-toast";
+
 const CreateContainer = () => {
-  // State declarations using useState
-  const [title, setTitle] = useState(""); // Title of the food item
-  const [calories, setCalories] = useState(""); // Calories of the food item
-  const [price, setPrice] = useState(""); // Price of the food item
-  const [category, setCategory] = useState(null); // Selected category
-  const [imageAsset, setImageAsset] = useState(null); // Uploaded image
-  const [fields, setFields] = useState(false); // Alert visibility toggle
-  const [alertStatus, setAlertStatus] = useState("danger"); // Alert status (success or danger)
-  const [msg, setMsg] = useState(null); // Alert message
-  const [isLoading, setIsLoading] = useState(false); // Loading state for async operations
-  //const [{ foodItems }, dispatch] = useStateValue(); // Global state with dispatch function
-
-  // Function to handle image upload
-  const uploadImage = (e) => {};
-
-  // Function to delete the uploaded image
-  const deleteImage = () => {};
-
-  // Function to save item details
-  const saveDetails = () => {};
-
-  // Function to clear form data
-  const clearData = () => {
-    setTitle("");
-    setImageAsset(null);
-    setCalories("");
-    setPrice("");
-    setCategory("Select Category");
+  const [uploading, setUploading] = useState(false);
+  const [imageAsset, setImageAsset] = useState(null);
+  const { register, handleSubmit, setValue, formState, reset } = useForm({
+    defaultValues: {
+      title: "",
+      category: "other",
+      price: "",
+      imageURL: "",
+      qty: 1,
+    },
+  });
+  const { isSubmitting, isLoading } = formState;
+  const loading = isSubmitting || isLoading || uploading;
+  const uploadImage = async (e) => {
+    setUploading(true);
+    try {
+      const file = e.target.files[0];
+      const data = await uploadImageAPI(file);
+      setValue("imageURL", data.fullPath);
+      setImageAsset(
+        `${import.meta.env.VITE_SUPABASE_STORAGE}/${data.fullPath}`,
+      );
+    } catch (error) {
+      toast.error("Error uploading image" + error.message);
+    }
+    setUploading(false);
   };
 
-  // Function to fetch all food items
-  // const fetchData = async () => {
-  //   await getAllFoodItems().then((data) => {
-  //     dispatch({
-  //       type: actionType.SET_FOOD_ITEMS, // Set items in global state
-  //       foodItems: data,
-  //     });
-  //   });
-  // };
+  const deleteImage = async () => {
+    const toastId = toast.loading("Deleting image...");
+    try {
+      await deleteImageAPI(imageAsset);
+      setImageAsset(null);
+      toast.success("Image deleted successfully", { id: toastId });
+    } catch (error) {
+      toast.error("Error deleting image" + error.message, { id: toastId });
+    }
+  };
 
-  // JSX for rendering the component
+  const onSubmit = async (data) => {
+    const toastId = toast.loading("Adding food item...");
+    try {
+      await addFoodItem(data);
+      toast.success("Food item added successfully", { id: toastId });
+      reset();
+      setImageAsset(null);
+    } catch (error) {
+      toast.error("Error adding food item" + error.message, { id: toastId });
+    }
+  };
+  const onError = () => {
+    toast.error("Please fill all the fields");
+  };
+
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
       {/* Main container */}
-      <div className="flex w-[90%] flex-col items-center justify-center gap-4 rounded-lg border border-gray-300 p-4 md:w-[50%]">
-        {/* Alert */}
-        {fields && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className={`w-full rounded-lg p-2 text-center text-lg font-semibold ${
-              alertStatus === "danger"
-                ? "bg-red-400 text-red-800"
-                : "bg-emerald-400 text-emerald-800"
-            }`}
-          >
-            {msg}
-          </motion.p>
-        )}
-
+      <form
+        onSubmit={handleSubmit(onSubmit, onError)}
+        className="flex w-[90%] flex-col items-center justify-center gap-4 rounded-lg border border-gray-300 p-4 md:w-[50%]"
+      >
         {/* Input fields and upload section */}
         <div className="flex w-full items-center gap-2 border-b border-gray-300 py-2">
           <MdFastfood className="text-xl text-gray-700" />
           <input
             type="text"
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            {...register("title", {
+              required: "This field is required",
+            })}
             placeholder="Give me a title..."
             className="h-full w-full border-none bg-transparent text-lg text-textColor outline-none placeholder:text-gray-400"
           />
@@ -94,7 +96,8 @@ const CreateContainer = () => {
         {/* Category dropdown */}
         <div className="w-full">
           <select
-            onChange={(e) => setCategory(e.target.value)}
+            id="category"
+            onChange={(e) => setValue("category", e.target.value)}
             className="w-full cursor-pointer rounded-md border-b-2 border-gray-200 p-2 text-base outline-none"
           >
             <option value="other" className="bg-white">
@@ -115,7 +118,7 @@ const CreateContainer = () => {
 
         {/* Image upload section */}
         <div className="group flex h-225 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dotted border-gray-300 md:h-340">
-          {isLoading ? (
+          {uploading ? (
             <Loader />
           ) : (
             <>
@@ -165,9 +168,11 @@ const CreateContainer = () => {
             <MdFoodBank className="text-2xl text-gray-700" />
             <input
               type="text"
-              required
-              value={calories}
-              onChange={(e) => setCalories(e.target.value)}
+              {...register("calories", {
+                required: "This field is required",
+                onChange: (e) =>
+                  setValue("calories", e.target.value.replace(/\D/g, "")),
+              })}
               placeholder="Calories"
               className="h-full w-full border-none bg-transparent text-lg text-textColor outline-none placeholder:text-gray-400"
             />
@@ -176,9 +181,11 @@ const CreateContainer = () => {
             <MdAttachMoney className="text-2xl text-gray-700" />
             <input
               type="text"
-              required
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              {...register("price", {
+                required: "This field is required",
+                onChange: (e) =>
+                  setValue("price", e.target.value.replace(/\D/g, "")),
+              })}
               placeholder="Price"
               className="h-full w-full border-none bg-transparent text-lg text-textColor outline-none placeholder:text-gray-400"
             />
@@ -187,15 +194,14 @@ const CreateContainer = () => {
 
         {/* Save button */}
         <div className="flex w-full items-center">
-          <button
-            type="button"
-            className="ml-0 w-full rounded-lg border-none bg-emerald-500 px-12 py-2 text-lg font-semibold text-white outline-none md:ml-auto md:w-auto"
-            onClick={saveDetails}
-          >
-            Save
-          </button>
+          <input
+            type="submit"
+            disabled={loading}
+            className="ml-0 w-full rounded-lg border-none bg-emerald-500 px-12 py-2 text-lg font-semibold text-white outline-none disabled:cursor-not-allowed disabled:bg-gray-300 md:ml-auto md:w-auto"
+            value={"Save"}
+          />
         </div>
-      </div>
+      </form>
     </div>
   );
 };
