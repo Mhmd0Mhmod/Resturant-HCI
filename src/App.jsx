@@ -10,6 +10,8 @@ import {
   MenuPage,
   ProtecteRoutes,
   ServicesPage,
+  Login,
+  SignUp,
 } from "./components";
 import { store } from "./context/store";
 import AppLayout from "./AppLayout";
@@ -22,7 +24,7 @@ function App() {
           <Routes>
             <Route element={<AppLayout />}>
               <Route index path="/" element={<MainContainer />} />
-              <Route path="menu" element=<MenuPage /> />
+              <Route path="menu" element={<MenuPage />} />
               <Route path="aboutus" element={<AboutUsPage />} />
               <Route path="services" element={<ServicesPage />} />
               <Route
@@ -33,6 +35,8 @@ function App() {
                   </ProtecteRoutes>
                 }
               />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<SignUp />} />
             </Route>
           </Routes>
         </AnimatePresence>
@@ -41,4 +45,5 @@ function App() {
     </BrowserRouter>
   );
 }
+
 export default App;
