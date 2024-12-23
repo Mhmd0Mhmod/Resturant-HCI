@@ -19,3 +19,5 @@ export { default as AboutUsPage } from "./AboutUsPage";
 export { default as ServicesPage } from "./ServicesPage";
 
 export { default as OrdersPage } from "./OrdersPage";
+
+export { default as OrderDetails } from "./OrderDetails";

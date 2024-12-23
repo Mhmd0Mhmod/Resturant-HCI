@@ -101,3 +101,44 @@ export const checkoutOrder = createAsyncThunk(
     }
   },
 );
+
+export const getOrders = async (userId) => {
+  const { data, error } = await supabase
+    .from("Orders")
+    .select("*")
+    .eq("userId", userId);
+  if (error) {
+    throw error;
+  } else {
+    return data;
+  }
+};
+
+export const getOrder = async (orderId, id) => {
+  const { data, error } = await supabase
+    .from("Orders")
+    .select("*")
+    .eq("id", orderId)
+    .eq("userId", id)
+    .single();
+  console.log(data);
+
+  if (error) {
+    throw error;
+  } else {
+    return data;
+  }
+};
+
+export const removeOrder = async (orderId, id) => {
+  const { data, error } = await supabase
+    .from("Orders")
+    .delete()
+    .eq("id", orderId)
+    .eq("userId", id);
+  if (error) {
+    throw error;
+  } else {
+    return data;
+  }
+};

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 const ADMINS = import.meta.env.VITE_SUPABASE_ADMINS;
 
 function ProtecteRoutes({ children }) {
@@ -9,8 +9,8 @@ function ProtecteRoutes({ children }) {
 
   if (!user && !ADMINS.includes(user?.id)) {
     navigate("/");
-    return;
+    return <Navigate to="/" />;
   }
-  return children;
+  return <Outlet />;
 }
 export default ProtecteRoutes;
