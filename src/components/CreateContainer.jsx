@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   uploadImage as uploadImageAPI,
   deleteImage as deleteImageAPI,
   addFoodItem,
+  getFoodItems,
 } from "../DB/services";
 import {
   MdFastfood,
@@ -30,6 +31,7 @@ const CreateContainer = () => {
       qty: 1,
     },
   });
+
   const { isSubmitting, isLoading } = formState;
   const loading = isSubmitting || isLoading || uploading;
   const uploadImage = async (e) => {

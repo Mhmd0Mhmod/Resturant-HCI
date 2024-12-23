@@ -56,3 +56,12 @@ export async function addFoodItem(data) {
     throw error;
   }
 }
+
+export async function getFoodItems() {
+  const { data, error } = await supabase.from("Food").select("*");
+  if (error) {
+    throw error;
+  } else {
+    return data;
+  }
+}
