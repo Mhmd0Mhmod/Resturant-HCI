@@ -1,7 +1,7 @@
 import { AnimatePresence } from "motion/react";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./AppLayout";
 import {
   AboutUsPage,
@@ -10,7 +10,8 @@ import {
   MenuPage,
   OrdersPage,
   ProtecteRoutes,
-  ServicesPage
+  ServicesPage,
+  OrderDetails,
 } from "./components";
 import { store } from "./context/store";
 import UserProfile from "./components/ProfileSettings";
@@ -22,21 +23,16 @@ function App() {
         <AnimatePresence mode="wait">
           <Routes>
             <Route element={<AppLayout />}>
-              <Route index path="/" element={<MainContainer />} />
+              <Route index element={<Navigate to={"home"} replace />} />
+              <Route path="home" element={<MainContainer />} />
               <Route path="menu" element={<MenuPage />} />
               <Route path="aboutus" element={<AboutUsPage />} />
               <Route path="services" element={<ServicesPage />} />
-              <Route path="orders" element={<OrdersPage />} />
-              <Route path="/profile" element={<UserProfile />} />
-
-              <Route
-                path="createItem"
-                element={
-                  <ProtecteRoutes>
-                    <CreateContainer />
-                  </ProtecteRoutes>
-                }
-              />
+              <Route element={<ProtecteRoutes />}>
+                <Route path="orders" element={<OrdersPage />} />
+                <Route path="createItem" element={<CreateContainer />} />
+                <Route path="orders/:id" element={<OrderDetails />} />
+              </Route>
             </Route>
           </Routes>
         </AnimatePresence>

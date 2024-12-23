@@ -54,7 +54,7 @@ function Header() {
     <header className="fixed z-50 w-screen bg-primary p-3 px-4 md:p-6 md:px-16">
       {/* desktop and tablet size */}
       <div className="hidden h-full w-full items-center justify-between md:flex">
-        <Link to={"/"} className="flex items-center gap-2">
+        <Link to={"/home"} className="flex items-center gap-2">
           <img src={Logo} className="w-8 object-cover" alt="Logo" />
           <p className="text-xl font-bold text-headingColor">City</p>
         </Link>
@@ -66,7 +66,7 @@ function Header() {
             exit={{ opacity: 0, x: 200 }}
             className="flex items-center gap-8"
           >
-            <Link to={"/"}>
+            <Link to={"/home"}>
               <li className="cursor-pointer text-base text-textColor transition-all duration-100 ease-in-out hover:text-headingColor">
                 Home
               </li>
@@ -156,7 +156,7 @@ function Header() {
           )}
         </div>
 
-        <Link to={"/"} className="flex items-center gap-2">
+        <Link to={"/home"} className="flex items-center gap-2">
           <img src={Logo} className="w-8 object-cover" alt="Logo" />
           <p className="text-xl font-bold text-headingColor">City</p>
         </Link>
@@ -184,7 +184,7 @@ function Header() {
                 </Link>
               )}
               <ul className="flex flex-col">
-                <Link to={"/"}>
+                <Link to={"/home"}>
                   <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
                     Home
                   </li>

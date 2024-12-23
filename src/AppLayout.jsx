@@ -7,7 +7,6 @@ import { setCart } from "./context/CartSlice";
 function AppLayout() {
   const dispatch = useDispatch();
   const { showCart } = useSelector((state) => state.state);
-  const { cart } = useSelector((state) => state.cart);
   useEffect(() => {
     const cartStorage = JSON.parse(localStorage.getItem("cart"));
     if (cartStorage) {
@@ -17,7 +16,7 @@ function AppLayout() {
   return (
     <div className="flex h-auto flex-col bg-primary">
       <Header />
-      <main className="mt-14 w-full px-4 py-4 md:mt-20 md:px-16">
+      <main className="mt-14 min-h-screen w-full px-4 py-4 md:mt-20 md:px-16">
         <Outlet />
       </main>
       {showCart && <CartContainer />}
