@@ -2,74 +2,19 @@ import HomContainer from "./HomeContainer";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { motion } from "framer-motion";
 import RowContainer from "./RowContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CartContainer from "./CartContainer";
 import MenuContainer from "./MenuContainer";
-import { useSelector } from "react-redux";
-
-const fruitsData = [
-  {
-    id: 1,
-    name: "Apple",
-    image:
-      "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
-    calories: 52,
-    price: 1.5,
-  },
-  {
-    id: 2,
-    name: "Banana",
-    image:
-      "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
-    calories: 89,
-    price: 0.5,
-  },
-  {
-    id: 3,
-    name: "Strawberry",
-    image:
-      "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
-    calories: 33,
-    price: 2.0,
-  },
-  {
-    id: 4,
-    name: "Strawberry",
-    image:
-      "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
-    calories: 33,
-    price: 2.0,
-  },
-  {
-    id: 5,
-    name: "Strawberry",
-    image:
-      "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
-    calories: 33,
-    price: 2.0,
-  },
-  {
-    id: 6,
-    name: "Strawberry",
-    image:
-      "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
-    calories: 33,
-    price: 2.0,
-  },
-  {
-    id: 7,
-    name: "Strawberry",
-    image:
-      "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
-    calories: 33,
-    price: 2.0,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFoodItems } from "../DB/services";
 function MainContainer() {
   const [scrollValue, setScrollValue] = useState(0);
+  const { food } = useSelector((state) => state.food);
+  const dispatch = useDispatch();
   const { showCart } = useSelector((state) => state.state);
-  console.log(showCart);
-
+  useEffect(() => {
+    dispatch(fetchFoodItems());
+  }, [dispatch]);
   return (
     <div className="flex h-auto w-full flex-col items-center justify-center">
       <HomContainer />
@@ -99,7 +44,11 @@ function MainContainer() {
           </div>
         </div>
 
-        <RowContainer scrollValue={scrollValue} flag={true} data={fruitsData} />
+        <RowContainer
+          scrollValue={scrollValue}
+          flag={true}
+          data={food.filter((f) => f.category === "fruits")}
+        />
       </section>
 
       <MenuContainer />

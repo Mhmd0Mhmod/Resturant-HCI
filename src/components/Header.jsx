@@ -11,6 +11,7 @@ import Logo from "./../imgs/logo.png";
 import toast from "react-hot-toast";
 function Header() {
   const dispatch = useDispatch();
+  const { totalItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.state);
   const [isMenu, setIsMenu] = useState(false);
   useEffect(() => {
@@ -23,6 +24,7 @@ function Header() {
     };
     getUser();
   }, [dispatch]);
+
   const login = () => {
     if (!user) {
       signInWithGoogle();
@@ -83,9 +85,11 @@ function Header() {
             onClick={handleShowCart}
           >
             <MdShoppingBasket className="cursor-pointer text-2xl text-textColor" />
-            <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-cartNumBg">
-              <p className="text-xs font-semibold text-white">2</p>
-            </div>
+            {totalItems > 0 && (
+              <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-cartNumBg">
+                <p className="text-xs font-semibold text-white">{totalItems}</p>
+              </div>
+            )}
           </div>
           <div className="relative">
             <motion.img
@@ -126,11 +130,16 @@ function Header() {
 
       {/* mobile size */}
       <div className="flex h-full w-full items-center justify-between md:hidden">
-        <div className="relative flex items-center justify-center">
+        <div
+          className="relative flex items-center justify-center"
+          onClick={handleShowCart}
+        >
           <MdShoppingBasket className="cursor-pointer text-2xl text-textColor" />
-          <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-cartNumBg">
-            <p className="text-xs font-semibold text-white">2</p>
-          </div>
+          {totalItems > 0 && (
+            <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-cartNumBg">
+              <p className="text-xs font-semibold text-white">{totalItems}</p>
+            </div>
+          )}
         </div>
 
         <Link to={"/"} className="flex items-center gap-2">

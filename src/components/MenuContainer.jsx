@@ -8,11 +8,9 @@ import RowContainer from "./RowContainer";
 
 const MenuContainer = () => {
   const [filter, setFilter] = useState("chicken");
-  const dispatch = useDispatch();
+
   const { food: dataToDisplay } = useSelector((state) => state.food);
-  useEffect(() => {
-    dispatch(fetchFoodItems());
-  }, [dispatch]);
+
   return (
     <section className="my-6 w-full" id="menu">
       <div className="flex w-full flex-col items-center justify-center">
