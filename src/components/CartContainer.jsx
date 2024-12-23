@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { RiRefreshFill } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { BiMinus, BiPlus } from "react-icons/bi";
 
 const CartContainer = () => {
+
   return (
-    <div className="fixed right-0 top-0 z-[101] flex h-screen w-full flex-col bg-white drop-shadow-md md:w-375">
+    <motion.div 
+    initial={{ opacity: 0, x: 200 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: 200 }}
+     className="fixed right-0 top-0 z-[101] flex h-screen w-full flex-col bg-white drop-shadow-md md:w-375">
       <div className="flex w-full cursor-pointer items-center justify-between p-4">
         <motion.div whileTap={{ scale: 0.75 }}>
           <MdOutlineKeyboardBackspace className="text-3xl text-textColor" />
         </motion.div>
         <p className="text-lg font-semibold text-textColor">Cart</p>
-
+        
         <motion.p
           whileTap={{ scale: 0.75 }}
           className="my-2 flex cursor-pointer items-center gap-2 rounded-md bg-gray-100 p-1 px-2 text-base text-textColor hover:shadow-md"
@@ -68,14 +73,14 @@ const CartContainer = () => {
             <motion.button
               whileTap={{ scale: 0.8 }}
               type="button"
-              className="my-2 w-full rounded-full bg-orange-500 p-2 text-lg text-gray-50 transition-all duration-150 ease-out hover:shadow-lg"
+              className="my-2 w-full rounded-full bg-orange-500 p-2 text-lg text-gray-50 hover:shadow-lg"
             >
               checkout
             </motion.button>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
