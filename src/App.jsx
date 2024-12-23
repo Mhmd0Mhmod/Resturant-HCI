@@ -4,6 +4,8 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { CreateContainer, Header, MainContainer } from "./components";
 import { store } from "./context/store";
+import OrderDetails from "./components/OrderDetails";
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
               <Routes>
                 <Route path="/*" element={<MainContainer />} />
                 <Route path="/createItem" element={<CreateContainer />} />
+                <Route path="/order-details" element={<OrderDetails />} />
               </Routes>
             </main>
           </div>
