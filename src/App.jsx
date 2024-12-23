@@ -12,9 +12,9 @@ import {
   ProtecteRoutes,
   ServicesPage,
   OrderDetails,
+  UserProfile,
 } from "./components";
 import { store } from "./context/store";
-import UserProfile from "./components/ProfileSettings";
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
                 <Route path="orders" element={<OrdersPage />} />
                 <Route path="createItem" element={<CreateContainer />} />
                 <Route path="orders/:id" element={<OrderDetails />} />
+                <Route path="profile" element={<UserProfile />} />
               </Route>
             </Route>
           </Routes>

@@ -21,3 +21,5 @@ export { default as ServicesPage } from "./ServicesPage";
 export { default as OrdersPage } from "./OrdersPage";
 
 export { default as OrderDetails } from "./OrderDetails";
+
+export { default as UserProfile } from "./ProfileSettings";

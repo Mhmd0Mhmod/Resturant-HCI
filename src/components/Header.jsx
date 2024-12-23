@@ -25,12 +25,8 @@ function Header() {
     getUser();
   }, [dispatch]);
 
-  const login = () => {
-    if (!user) {
-      signInWithGoogle();
-    } else {
-      setIsMenu(!isMenu);
-    }
+  const ToggleMenu = () => {
+    setIsMenu(!isMenu);
   };
   const logout = async () => {
     try {
@@ -108,37 +104,54 @@ function Header() {
             )}
           </div>
           <div className="relative">
-            <motion.img
-              whileTap={{ scale: 0.6 }}
-              src={avatar_url}
-              alt="user"
-              className="h-10 min-h-[40px] w-10 min-w-[40px] cursor-pointer rounded-full drop-shadow-xl"
-              onClick={login}
-            />
-            {isMenu && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.6 }}
-                className="absolute right-0 top-12 flex w-40 flex-col rounded-lg bg-primary shadow-xl"
-              >
-                {isAdmin && (
-                  <Link to={"/createItem"}>
+            {user ? (
+              <>
+                <motion.img
+                  whileTap={{ scale: 0.6 }}
+                  src={avatar_url}
+                  alt="user"
+                  className="h-10 min-h-[40px] w-10 min-w-[40px] cursor-pointer rounded-full drop-shadow-xl"
+                  onClick={ToggleMenu}
+                />
+                {isMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.6 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.6 }}
+                    className="absolute right-0 top-12 flex w-40 flex-col rounded-lg bg-primary shadow-xl"
+                  >
+                    {isAdmin && (
+                      <Link to={"/createItem"}>
+                        <p
+                          className="flex cursor-pointer items-center gap-3 px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100"
+                          onClick={() => setIsMenu(false)}
+                        >
+                          New Item <MdAdd />
+                        </p>
+                      </Link>
+                    )}
                     <p
                       className="flex cursor-pointer items-center gap-3 px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100"
-                      onClick={() => setIsMenu(false)}
+                      onClick={logout}
                     >
-                      New Item <MdAdd />
+                      Logout <MdLogout />
                     </p>
-                  </Link>
+                  </motion.div>
                 )}
-                <p
-                  className="flex cursor-pointer items-center gap-3 px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100"
-                  onClick={logout}
-                >
-                  Logout <MdLogout />
-                </p>
-              </motion.div>
+              </>
+            ) : (
+              <div className="flex gap-2">
+                <Link to={"/login"}>
+                  <p className="w-full rounded-lg bg-gradient-to-br from-orange-400 to-orange-500 px-4 py-2 transition-all duration-100 ease-in-out hover:shadow-lg md:w-auto">
+                    Login
+                  </p>
+                </Link>
+                <Link to={"/signup"}>
+                  <p className="w-full rounded-lg bg-gradient-to-br from-gray-200 to-gray-400 px-4 py-2 transition-all duration-100 ease-in-out hover:shadow-lg md:w-auto">
+                    Sign Up
+                  </p>
+                </Link>
+              </div>
             )}
           </div>
         </div>
@@ -169,7 +182,7 @@ function Header() {
             src={avatar_url}
             alt="user"
             className="h-10 min-h-[40px] w-10 min-w-[40px] cursor-pointer rounded-full drop-shadow-xl"
-            onClick={login}
+            onClick={ToggleMenu}
           />
           {isMenu && (
             <motion.div
@@ -212,13 +225,35 @@ function Header() {
                     Orders
                   </li>
                 </Link>
+                {user ? (
+                  <Link to={"/profile"}>
+                    <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
+                      Profile
+                    </li>
+                  </Link>
+                ) : (
+                  <>
+                    <Link to={"/login"}>
+                      <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
+                        Login
+                      </li>
+                    </Link>
+                    <Link to={"/signup"}>
+                      <li className="cursor-pointer px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100 hover:text-headingColor">
+                        Sign Up
+                      </li>
+                    </Link>
+                  </>
+                )}
               </ul>
-              <p
-                className="m-2 flex cursor-pointer items-center justify-center gap-3 rounded-md bg-gray-200 p-2 text-base text-textColor shadow-md transition-all duration-100 ease-in-out hover:bg-gray-300"
-                onClick={logout}
-              >
-                Logout <MdLogout />
-              </p>
+              {user && (
+                <p
+                  className="m-2 flex cursor-pointer items-center justify-center gap-3 rounded-md bg-gray-200 p-2 text-base text-textColor shadow-md transition-all duration-100 ease-in-out hover:bg-gray-300"
+                  onClick={logout}
+                >
+                  Logout <MdLogout />
+                </p>
+              )}
             </motion.div>
           )}
         </div>

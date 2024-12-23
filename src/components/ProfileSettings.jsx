@@ -1,108 +1,88 @@
-import React from "react";
+import { useSelector } from "react-redux";
 
 const ProfileSettings = () => {
+  const { user } = useSelector((state) => state.state) || {};
+  console.log(user);
+  const {
+    email,
+    phone,
+    user_metadata: { full_name, avatar_url, address, postal_code },
+  } = user;
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row px-4 md:px-8 py-8">
-      {/* Sidebar */}
-      <aside className="w-full md:w-1/4 bg-white shadow-lg p-4 mb-4 md:mb-0">
-        <h2 className="text-xl font-bold mb-6">Account</h2>
-        <ul className="space-y-6">
-          <li className="flex items-center text-blue-600 cursor-pointer text-lg">
-            <span className="mr-2">📄</span>
-            Personal Data
-          </li>
-          <li className="flex items-center text-red-500 cursor-pointer hover:text-red-600 text-lg">
-            <span className="mr-2">🚪</span>
-            Logout
-          </li>
-        </ul>
-      </aside>
-
+    <div className="flex min-h-screen flex-col rounded-lg bg-gray-50 px-4 py-8 md:flex-row md:px-8">
       {/* Main Content */}
-      <main className="flex-1 bg-white shadow-lg p-6 md:p-8">
+      <main className="flex-1 rounded-lg bg-white p-6 shadow-lg md:p-8">
         {/* Profile Image Section */}
-        <div className="flex flex-col items-center mb-8">
+        <div className="mb-8 flex flex-col items-center">
           <img
-            src="https://via.placeholder.com/150" // صورة رمزية افتراضية
+            src={avatar_url} // صورة رمزية افتراضية
             alt="Profile"
-            className="w-32 h-32 rounded-full object-cover border-4 border-blue-500 mb-4"
+            className="mb-4 h-32 w-32 rounded-full border-4 border-blue-500 object-cover"
           />
-          <h3 className="text-xl font-bold text-gray-700">Mohammed</h3>
-          <p className="text-sm text-gray-500">mohammed@text.com</p>
+          <h3 className="text-xl font-bold text-gray-700">{full_name}</h3>
+          <p className="text-sm text-gray-500">{email}</p>
         </div>
 
-        <h3 className="text-xl font-bold mb-4">Identification</h3>
-        <p className="text-sm text-gray-500 mb-8">Verify Your Identity</p>
+        <h3 className="mb-4 text-xl font-bold">Identification</h3>
+        <p className="mb-8 text-sm text-gray-500">Verify Your Identity</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {/* Full Name */}
-          <div className="flex items-center bg-gray-100 rounded-lg p-4">
-            <span className="text-gray-400 mr-4">👤</span>
+          <div className="flex items-center rounded-lg bg-gray-100 p-4">
+            <span className="mr-4 text-gray-400">👤</span>
             <input
               type="text"
               placeholder="Full Name"
-              defaultValue="Mohammed"
-              className="bg-transparent flex-1 text-gray-600 focus:outline-none"
+              defaultValue={full_name}
+              className="flex-1 bg-transparent text-gray-600 focus:outline-none"
             />
-            <button className="text-blue-500 hover:text-blue-600">
-              ✎
-            </button>
+            <button className="text-blue-500 hover:text-blue-600">✎</button>
           </div>
 
           {/* Email Address */}
-          <div className="flex items-center bg-gray-100 rounded-lg p-4">
-            <span className="text-gray-400 mr-4">✉️</span>
+          <div className="flex items-center rounded-lg bg-gray-100 p-4">
+            <span className="mr-4 text-gray-400">✉️</span>
             <input
               type="email"
               placeholder="E-mail Address"
-              defaultValue="mohammed@text.com"
-              className="bg-transparent flex-1 text-gray-600 focus:outline-none"
+              defaultValue={email}
+              className="flex-1 bg-transparent text-gray-600 focus:outline-none"
             />
-            <button className="text-blue-500 hover:text-blue-600">
-              ✎
-            </button>
+            <button className="text-blue-500 hover:text-blue-600">✎</button>
           </div>
 
           {/* Phone Number */}
-          <div className="flex items-center bg-gray-100 rounded-lg p-4">
-            <span className="text-gray-400 mr-4">📞</span>
+          <div className="flex items-center rounded-lg bg-gray-100 p-4">
+            <span className="mr-4 text-gray-400">📞</span>
             <input
               type="text"
               placeholder="Phone Number"
-              className="bg-transparent flex-1 text-gray-600 focus:outline-none"
+              defaultValue={phone}
+              className="flex-1 bg-transparent text-gray-600 focus:outline-none"
             />
           </div>
-
-          {/* Password */}
-          <div className="flex items-center bg-gray-100 rounded-lg p-4">
-            <span className="text-gray-400 mr-4">🔑</span>
-            <input
-              type="password"
-              placeholder="Password"
-              className="bg-transparent flex-1 text-gray-600 focus:outline-none"
-            />
-          </div>
-
           {/* Address */}
-          <div className="flex items-center bg-gray-100 rounded-lg p-4">
-            <span className="text-gray-400 mr-4">📍</span>
+          <div className="flex items-center rounded-lg bg-gray-500 p-4">
+            <span className="mr-4 text-gray-400">📍</span>
             <input
               type="text"
               placeholder="Address"
-              className="bg-transparent flex-1 text-gray-600 focus:outline-none"
+              defaultValue={address}
+              disabled
+              className="flex-1 bg-transparent text-gray-600 focus:outline-none disabled:bg-gray-500"
             />
-            <button className="text-blue-500 hover:text-blue-600">
-              ✎
-            </button>
+            <button className="text-blue-500 hover:text-blue-600">✎</button>
           </div>
 
           {/* Postal Code */}
-          <div className="flex items-center bg-gray-100 rounded-lg p-4">
-            <span className="text-gray-400 mr-4">📮</span>
+          <div className="flex items-center rounded-lg bg-gray-500 p-4">
+            <span className="mr-4 text-gray-400">📮</span>
             <input
               type="text"
               placeholder="Postal Code"
-              className="bg-transparent flex-1 text-gray-600 focus:outline-none"
+              defaultValue={postal_code}
+              disabled
+              className="flex-1 bg-transparent text-gray-600 focus:outline-none disabled:bg-gray-500"
             />
           </div>
         </div>
