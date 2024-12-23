@@ -14,6 +14,7 @@ import {
   OrderDetails,
 } from "./components";
 import { store } from "./context/store";
+import UserProfile from "./components/ProfileSettings";
 
 function App() {
   return (
