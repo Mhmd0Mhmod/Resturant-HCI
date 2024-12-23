@@ -2,13 +2,11 @@ import HomContainer from "./HomeContainer";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { motion } from "framer-motion";
 import RowContainer from "./RowContainer";
-import { useEffect, useRef, useState } from "react";
-import CartContainer from "./CartContainer";
+
 
 function MainContainer() {
   const [scrollValue, setScrollValue] = useState(0);
 
-  // بيانات الفواكه
   const fruitsData = [
     {
       id: 1,
@@ -35,7 +33,7 @@ function MainContainer() {
       price: 2.0,
     },
     {
-      id: 3,
+      id: 4,
       name: "Strawberry",
       image:
         "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
@@ -43,7 +41,7 @@ function MainContainer() {
       price: 2.0,
     },
     {
-      id: 3,
+      id: 5,
       name: "Strawberry",
       image:
         "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
@@ -51,7 +49,7 @@ function MainContainer() {
       price: 2.0,
     },
     {
-      id: 3,
+      id: 6,
       name: "Strawberry",
       image:
         "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
@@ -59,16 +57,17 @@ function MainContainer() {
       price: 2.0,
     },
     {
-      id: 3,
+      id: 7,
       name: "Strawberry",
       image:
         "https://www.spiritedandthensome.com/wp-content/uploads/2024/03/The-Worlds-Best-Chocolate-Coffee-Square-650-9248.jpg",
       calories: 33,
       price: 2.0,
     },
-    
   ];
 
+function MainContainer() {
+  const [scrollValue, setScrollValue] = useState(0);
   return (
     <div className="flex h-auto w-full flex-col items-center justify-center">
       <HomContainer />
@@ -83,7 +82,7 @@ function MainContainer() {
             <motion.button
               whileTap={{ scale: 0.75 }}
               className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-orange-300 hover:bg-orange-500 hover:shadow-lg"
-              onClick={() => setScrollValue((prev) => prev - 200)} 
+              onClick={() => setScrollValue((prev) => prev - 200)}
             >
               <MdChevronLeft className="text-lg text-white" />
             </motion.button>
@@ -91,7 +90,7 @@ function MainContainer() {
             <motion.button
               whileTap={{ scale: 0.75 }}
               className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-orange-300 transition-all duration-100 ease-in-out hover:bg-orange-500 hover:shadow-lg"
-              onClick={() => setScrollValue((prev) => prev + 200)} 
+              onClick={() => setScrollValue((prev) => prev + 200)}
             >
               <MdChevronRight className="text-lg text-white" />
             </motion.button>
@@ -100,8 +99,7 @@ function MainContainer() {
 
         <RowContainer scrollValue={scrollValue} flag={true} data={fruitsData} />
       </section>
-      <CartContainer/>
-
+      <CartContainer />
     </div>
   );
 }

@@ -3,7 +3,6 @@ import {
   uploadImage as uploadImageAPI,
   deleteImage as deleteImageAPI,
   addFoodItem,
-  getFoodItems,
 } from "../DB/services";
 import {
   MdFastfood,
@@ -18,8 +17,10 @@ import { useForm } from "react-hook-form";
 
 import { categories } from "../utils/data";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 const CreateContainer = () => {
+  const dispatch = useDispatch();
   const [uploading, setUploading] = useState(false);
   const [imageAsset, setImageAsset] = useState(null);
   const { register, handleSubmit, setValue, formState, reset } = useForm({
@@ -62,14 +63,21 @@ const CreateContainer = () => {
 
   const onSubmit = async (data) => {
     const toastId = toast.loading("Adding food item...");
-    try {
-      await addFoodItem(data);
-      toast.success("Food item added successfully", { id: toastId });
-      reset();
-      setImageAsset(null);
-    } catch (error) {
-      toast.error("Error adding food item" + error.message, { id: toastId });
-    }
+    dispatch(
+      addFoodItem({
+        data,
+        onSuccess: () => {
+          toast.success("Food item added successfully", { id: toastId });
+          reset();
+          setImageAsset(null);
+        },
+        onError: (error) => {
+          toast.error("Error adding food item" + error.message, {
+            id: toastId,
+          });
+        },
+      }),
+    );
   };
   const onError = () => {
     toast.error("Please fill all the fields");

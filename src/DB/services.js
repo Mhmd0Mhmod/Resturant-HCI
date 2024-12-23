@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import { supabase } from "./Supabase";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const signInWithGoogle = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -50,18 +51,36 @@ export const deleteImage = async (imageURL) => {
   }
 };
 
-export async function addFoodItem(data) {
-  const { error } = await supabase.from("Food").insert(data);
-  if (error) {
-    throw error;
-  }
-}
-
-export async function getFoodItems() {
-  const { data, error } = await supabase.from("Food").select("*");
+export const addFoodItem = createAsyncThunk(
+  "food/AddFoodItem",
+  async ({ data, onSuccess, onError }) => {
+    const { error } = await supabase.from("Food").insert(data);
+    if (error) {
+      onError(error);
+    } else {
+      onSuccess();
+    }
+  },
+);
+export const getCateogry = async (category) => {
+  const { data, error } = await (
+    await supabase.from("food").select("*")
+  ).eq("category", category);
   if (error) {
     throw error;
   } else {
     return data;
   }
-}
+};
+
+export const fetchFoodItems = createAsyncThunk(
+  "food/fetchFoodItems",
+  async () => {
+    const { data, error } = await supabase.from("Food").select("*");
+    if (error) {
+      throw error;
+    } else {
+      return data;
+    }
+  },
+);
