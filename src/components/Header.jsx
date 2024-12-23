@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { MdAdd, MdLogout, MdShoppingBasket } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setUser } from "../context/slice";
+import { removeUser, setUser } from "../context/slice";
 import { signInWithGoogle } from "../DB/services";
 import { supabase } from "../DB/Supabase";
 import Avatar from "./../imgs/avatar.png";
 import Logo from "./../imgs/logo.png";
+import toast from "react-hot-toast";
 function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.state.user);
@@ -27,6 +28,16 @@ function Header() {
       signInWithGoogle();
     } else {
       setIsMenu(!isMenu);
+    }
+  };
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+      dispatch(removeUser());
+      setIsMenu(false);
+      toast.success("Logged out successfully");
+    } catch (error) {
+      toast.error("Error logging out" + error.message);
     }
   };
   const avatar_url = user?.user_metadata?.avatar_url || Avatar;
@@ -97,7 +108,7 @@ function Header() {
                 )}
                 <p
                   className="flex cursor-pointer items-center gap-3 px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100"
-                  // onClick={logout}
+                  onClick={logout}
                 >
                   Logout <MdLogout />
                 </p>

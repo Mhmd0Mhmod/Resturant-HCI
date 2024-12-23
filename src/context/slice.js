@@ -10,7 +10,10 @@ const reducer = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    removeUser: (state) => {
+      state.user = null;
+    },
   },
 });
-export const { setUser } = reducer.actions;
+export const { setUser, removeUser } = reducer.actions;
 export default reducer.reducer;
