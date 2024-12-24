@@ -173,3 +173,15 @@ export const removeOrder = async (orderId, id) => {
     return data;
   }
 };
+
+export const completeOrder = async (orderId) => {
+  const { data, error } = await supabase
+    .from("Orders")
+    .update({ status: "completed" })
+    .eq("id", orderId);
+  if (error) {
+    throw error;
+  } else {
+    return data;
+  }
+};

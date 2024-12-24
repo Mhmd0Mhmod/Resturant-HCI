@@ -1,10 +1,14 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { getOrder, removeOrder } from "../DB/services";
+import {
+  getOrder,
+  completeOrder as completeOrderAPI,
+  removeOrder,
+} from "../DB/services";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-
+const ADMINS = import.meta.env.VITE_SUPABASE_ADMINS;
 const OrderDetails = () => {
   const [order, setOrder] = useState({});
   const { id } = useParams();
@@ -21,8 +25,16 @@ const OrderDetails = () => {
       toast.success("Order Deleted Successfully");
     });
   }
-  const { order: cartItems, totalPrice } = order || {};
 
+  function completeOrder() {
+    completeOrderAPI(id).then(() => {
+      navigate("/orders");
+      toast.success("Order Completed Successfully");
+    });
+  }
+
+  const { order: cartItems, totalPrice, status } = order || {};
+  const isAdmin = ADMINS.includes(user?.id);
   return (
     <motion.section
       className="flex w-full flex-col items-start justify-center gap-8 bg-gray-100 p-8 md:flex-row"
@@ -89,12 +101,22 @@ const OrderDetails = () => {
             ${totalPrice?.toFixed(2)}
           </p>
         </div>
-        <button
-          className="w-full rounded-lg bg-red-500 px-4 py-2 text-white transition-all hover:bg-red-600"
-          onClick={deleteOrder}
-        >
-          Delete Order
-        </button>
+        <div className="space-y-4">
+          {isAdmin && status !== "completed" && (
+            <button
+              className="w-full rounded-lg bg-green-500 px-4 py-2 text-white transition-all hover:bg-green-600"
+              onClick={completeOrder}
+            >
+              Complete Order
+            </button>
+          )}
+          <button
+            className="w-full rounded-lg bg-red-500 px-4 py-2 text-white transition-all hover:bg-red-600"
+            onClick={deleteOrder}
+          >
+            Delete Order
+          </button>
+        </div>
       </motion.div>
     </motion.section>
   );
