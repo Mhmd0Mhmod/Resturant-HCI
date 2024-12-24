@@ -7,12 +7,13 @@ import Order from "./Order";
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const { user } = useSelector((state) => state.state);
+  const isAdmin = import.meta.env.VITE_SUPABASE_ADMINS.includes(user?.id);
   useEffect(() => {
-    getOrders(user.id).then((data) => {
+    if (!user) return;
+    getOrders(user.id, isAdmin).then((data) => {
       setOrders(data);
     });
-  }, [user]);
-  console.log(orders);
+  }, [user, isAdmin]);
 
   return (
     <motion.div

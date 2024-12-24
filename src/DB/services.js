@@ -12,6 +12,36 @@ export const signInWithGoogle = async () => {
     return data;
   }
 };
+export const login = async ({ email, password }) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+  if (error) {
+    throw error;
+  } else {
+    return data;
+  }
+};
+export const signUp = async ({ username, phone, email, password }) => {
+  console.log(username, phone, email, password);
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: username,
+        phone: phone,
+      },
+    },
+  });
+  if (error) {
+    throw error;
+  } else {
+    return data;
+  }
+};
 
 export const uploadImage = async (file) => {
   const fileExt = file.name.split(".").pop();
@@ -102,11 +132,12 @@ export const checkoutOrder = createAsyncThunk(
   },
 );
 
-export const getOrders = async (userId) => {
-  const { data, error } = await supabase
-    .from("Orders")
-    .select("*")
-    .eq("userId", userId);
+export const getOrders = async (userId, isAdmin) => {
+  let query = supabase.from("Orders").select("*");
+  if (!isAdmin) {
+    query = query.eq("userId", userId);
+  }
+  const { data, error } = await query;
   if (error) {
     throw error;
   } else {

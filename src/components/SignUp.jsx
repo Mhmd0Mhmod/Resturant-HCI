@@ -1,160 +1,114 @@
-import React from "react";
 import restaurantImage from "../imgs/logo.png";
 import google from "../imgs/google.png";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { signUp, signInWithGoogle } from "../DB/services";
+import { setUser } from "../context/slice";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
+  const { user } = useSelector((state) => state.state);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+      phone: "",
+      password: "",
+    },
+  });
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
+  function onSubmit(data) {
+    const toastId = toast.loading("Signing up...");
+    signUp(data)
+      .then(() => {
+        toast.success("Sign Up Successful", { id: toastId });
+        reset();
+      })
+      .catch((error) => {
+        toast.error(error.message, { id: toastId });
+      });
+  }
+  function onError(errors) {
+    const errorValues = Object.values(errors);
+    errorValues.forEach((error) => {
+      if (error.type === "required") {
+        toast.error(`${error.ref.name} is required`);
+      }
+    });
+  }
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        fontFamily: "Arial, sans-serif",
-        padding: "20px",
-      }}
-    >
+    <div className="flex min-h-screen flex-col items-center justify-center p-5 font-sans">
       {/* Image Section */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "200px", // Smaller image
-          marginBottom: "20px",
-        }}
-      >
+      <div className="mb-5 w-full max-w-xs">
         <img
           src={restaurantImage}
           alt="Restaurant"
-          style={{
-            width: "100%",
-            height: "auto",
-            borderRadius: "10px",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-          }}
+          className="h-auto w-full rounded-lg shadow-md"
         />
       </div>
 
       {/* Sign-Up Form Section */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "500px",
-          background: "#fff",
-          borderRadius: "10px",
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-          padding: "30px",
-          textAlign: "center",
-        }}
-      >
-        <h2
-          style={{
-            marginBottom: "20px",
-            color: "#333",
-            fontSize: "3rem",
-            fontWeight: "bold",
-            letterSpacing: "1px",
-          }}
-        >
+      <div className="w-full max-w-lg rounded-lg bg-white p-8 text-center shadow-md">
+        <h2 className="mb-5 text-3xl font-bold tracking-wide text-gray-800">
           Sign Up
         </h2>
-        <form style={{ marginBottom: "20px" }}>
-          <div style={{ marginBottom: "15px" }}>
+        <form className="mb-5" onSubmit={handleSubmit(onSubmit, onError)}>
+          <div className="mb-4">
             <input
               type="text"
               placeholder="Enter Username"
-              style={{
-                width: "100%",
-                padding: "15px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                fontSize: "16px",
-              }}
-              required
+              className="w-full rounded-md border border-gray-300 p-4 text-lg"
+              {...register("username", { required: true })}
             />
           </div>
-          <div style={{ marginBottom: "15px" }}>
+          <div className="mb-4">
             <input
               type="email"
               placeholder="Enter Email"
-              style={{
-                width: "100%",
-                padding: "15px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                fontSize: "16px",
-              }}
-              required
+              className="w-full rounded-md border border-gray-300 p-4 text-lg"
+              {...register("email", { required: true })}
             />
           </div>
-          <div style={{ marginBottom: "15px" }}>
+          <div className="mb-4">
             <input
               type="tel"
               placeholder="Enter Phone"
-              style={{
-                width: "100%",
-                padding: "15px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                fontSize: "16px",
-              }}
-              required
+              className="w-full rounded-md border border-gray-300 p-4 text-lg"
+              {...register("phone", { required: true })}
             />
           </div>
-          <div style={{ marginBottom: "20px" }}>
+          <div className="mb-5">
             <input
               type="password"
               placeholder="Enter Password"
-              style={{
-                width: "100%",
-                padding: "15px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                fontSize: "16px",
-              }}
-              required
+              className="w-full rounded-md border border-gray-300 p-4 text-lg"
+              {...register("password", { required: true })}
             />
           </div>
           <button
-            type="button"
-            style={{
-              width: "100%",
-              padding: "15px",
-              backgroundColor: "#333",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              fontSize: "16px",
-              cursor: "pointer",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              transition: "background-color 0.3s ease",
-            }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#cc6600")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#333")}
+            type="submit"
+            className="w-full cursor-pointer rounded-md bg-gray-800 p-4 text-lg text-white shadow-sm transition-colors duration-300 hover:bg-orange-600"
           >
             Sign Up Now
           </button>
         </form>
         <button
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            padding: "15px",
-            backgroundColor: "#4285F4",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            fontSize: "16px",
-            cursor: "pointer",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-          }}
+          onClick={signInWithGoogle}
+          className="flex w-full cursor-pointer items-center justify-center gap-4 rounded-md border bg-white p-4 text-lg text-blue-500 shadow-md hover:bg-gray-100"
         >
           <img
             src={google}
             alt="Google logo"
-            style={{ width: "30px", height: "30px", marginRight: "10px" }}
+            className="h-6 w-6 object-contain"
           />
           Sign Up with Google
         </button>

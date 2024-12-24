@@ -30,7 +30,7 @@ function App() {
               <Route path="menu" element={<MenuPage />} />
               <Route path="aboutus" element={<AboutUsPage />} />
               <Route path="services" element={<ServicesPage />} />
-              <Route element={<ProtecteRoutes />}>
+              <Route element={<ProtecteRoutes user={true} />}>
                 <Route path="orders" element={<OrdersPage />} />
                 <Route path="createItem" element={<CreateContainer />} />
                 <Route path="orders/:id" element={<OrderDetails />} />

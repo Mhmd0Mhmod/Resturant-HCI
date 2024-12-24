@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
-
+import avatar from "../imgs/avatar.png";
 const ProfileSettings = () => {
   const { user } = useSelector((state) => state.state) || {};
-  console.log(user);
+
+  if (!user) return null;
   const {
     email,
     phone,
     user_metadata: { full_name, avatar_url, address, postal_code },
-  } = user;
+  } = user || {};
   return (
     <div className="flex min-h-screen flex-col rounded-lg bg-gray-50 px-4 py-8 md:flex-row md:px-8">
       {/* Main Content */}
@@ -15,7 +16,7 @@ const ProfileSettings = () => {
         {/* Profile Image Section */}
         <div className="mb-8 flex flex-col items-center">
           <img
-            src={avatar_url} // صورة رمزية افتراضية
+            src={avatar_url || avatar} // صورة رمزية افتراضية
             alt="Profile"
             className="mb-4 h-32 w-32 rounded-full border-4 border-blue-500 object-cover"
           />
