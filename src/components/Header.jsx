@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { MdAdd, MdLogout, MdShoppingBasket } from "react-icons/md";
+import { MdAdd, MdLogout, MdPerson, MdShoppingBasket } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { removeUser, setShowCart, setUser } from "../context/slice";
@@ -130,6 +130,13 @@ function Header() {
                         </p>
                       </Link>
                     )}
+
+                    <Link
+                      to={"/profile"}
+                      className="flex cursor-pointer items-center gap-3 px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100"
+                    >
+                      Profile <MdPerson />
+                    </Link>
                     <p
                       className="flex cursor-pointer items-center gap-3 px-4 py-2 text-base text-textColor transition-all duration-100 ease-in-out hover:bg-slate-100"
                       onClick={logout}

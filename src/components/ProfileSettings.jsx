@@ -4,11 +4,9 @@ const ProfileSettings = () => {
   const { user } = useSelector((state) => state.state) || {};
 
   if (!user) return null;
-  const {
-    email,
-    phone,
-    user_metadata: { full_name, avatar_url, address, postal_code },
-  } = user || {};
+  const { email, phone } = user || {};
+  const { full_name, avatar_url, address, postal_code } =
+    user?.user_metadata || {};
   return (
     <div className="flex min-h-screen flex-col rounded-lg bg-gray-50 px-4 py-8 md:flex-row md:px-8">
       {/* Main Content */}

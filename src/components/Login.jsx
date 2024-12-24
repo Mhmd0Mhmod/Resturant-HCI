@@ -85,12 +85,14 @@ const Login = () => {
             Login Now
           </button>
         </form>
-        <button className="flex w-full cursor-pointer items-center justify-center gap-4 rounded-md border bg-white p-4 text-lg text-blue-500 shadow-md hover:bg-gray-100">
+        <button
+          onClick={signInWithGoogle}
+          className="flex w-full cursor-pointer items-center justify-center gap-4 rounded-md border bg-white p-4 text-lg text-blue-500 shadow-md hover:bg-gray-100"
+        >
           <img
             src={google}
             alt="Google logo"
             className="h-6 w-6 object-contain"
-            onClick={signInWithGoogle}
           />
           Login with Google
         </button>
